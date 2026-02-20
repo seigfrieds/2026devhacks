@@ -2,6 +2,8 @@
 import pygame
 from settings import *
 from Map import Map
+from player import Player
+from raycaster import Raycaster
 
 # pygame setup
 pygame.init()
@@ -9,7 +11,12 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
+# Setup map
 newMap = Map()
+
+# Setup player
+player = Player()
+raycaster = Raycaster(player)
 
 while running:
     # poll for events
@@ -20,13 +27,17 @@ while running:
             exit()
             running = False
 
-
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    screen.fill("white")
 
-    # RENDER YOUR GAME HERE
+    # update game here
+    player.update()
+    raycaster.cast_all_rays()
+
+    # render here
     newMap.draw(screen)
-
+    player.render(screen)
+    raycaster.render(screen)
 
     # flip() the display to put your work on screen
     pygame.display.flip()

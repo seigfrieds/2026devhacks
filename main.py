@@ -4,6 +4,7 @@ from settings import *
 from Map import Map
 from player import Player
 from raycaster import Raycaster
+from physics_engine import PhysicsEngine
 
 # pygame setup
 pygame.init()
@@ -11,12 +12,18 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
+# Setup physics engine
+physics_engine = PhysicsEngine()
+
 # Setup map
 newMap = Map()
 
 # Setup player
-player = Player()
+player = Player(physics_engine)
 raycaster = Raycaster(player)
+
+physics_engine.register_colliders(newMap.get_colliders())
+physics_engine.register_collider(player.get_collider())
 
 while running:
     # poll for events

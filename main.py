@@ -26,11 +26,12 @@ raycaster = Raycaster(player)
 
 # Setup enemies
 spawn_locations = [(1,4), (6,2), (5,4)]
-enemies = [Enemy(x) for x in spawn_locations]
+enemies = [Enemy(physics_engine,x) for x in spawn_locations]
 
 physics_engine.register_colliders(newMap.get_colliders())
 physics_engine.register_collider(player.get_collider())
-
+for enemy in enemies:
+    physics_engine.register_collider(enemy.get_collider())
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window

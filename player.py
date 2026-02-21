@@ -2,7 +2,7 @@ import pygame
 import math
 from settings import *
 from collider import Collider
-from physics_objects import MovingCollidingObject, LAYER_PLAYER, LAYER_POWERUP
+from physics_objects import MovingCollidingObject, LAYER_PLAYER, LAYER_POWERUP, LAYER_ENEMY
 
 class Player(MovingCollidingObject):
     def __init__(self):
@@ -18,6 +18,10 @@ class Player(MovingCollidingObject):
         for collided_obj in collided_objects:
             if collided_obj.get_layer() == LAYER_POWERUP:
                 event = pygame.event.Event(0, message="make sure to change the event id")
+                pygame.event.post(event)
+            if collided_obj.get_layer() == LAYER_ENEMY:
+                event_params = {"player" : self}
+                event = pygame.event.Event(GAME_OVER, event_params)
                 pygame.event.post(event)
 
     def update(self):

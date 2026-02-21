@@ -3,6 +3,7 @@ import pygame
 from settings import *
 from Map import Map
 from player import Player
+from enemy import Enemy
 from raycaster import Raycaster
 from physics_engine import PhysicsEngine
 
@@ -22,8 +23,14 @@ newMap = Map()
 player = Player()
 raycaster = Raycaster(player)
 
+# Setup enemies
+spawn_locations = [(1,4), (6,2), (5,4)]
+enemies = [Enemy(x) for x in spawn_locations]
+
 physics_engine.register_colliding_objects(newMap.get_colliders())
 physics_engine.register_moving_colliding_object(player)
+for enemy in enemies:
+    physics_engine.register_moving_colliding_object(enemy)
 
 while running:
     # poll for events
@@ -33,12 +40,17 @@ while running:
             pygame.quit()
             exit()
             running = False
+        if event.type == GAME_OVER:
+            print("Game Over")
+            physics_engine.deregister_moving_colliding_object(event.player)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
 
     # update game here
     player.update()
+    for enemy in enemies:
+        enemy.update(newMap)
     raycaster.cast_all_rays()
 
     # process physics
@@ -47,6 +59,8 @@ while running:
     # render here
     newMap.draw(screen)
     player.render(screen)
+    for enemy in enemies:
+        enemy.render(screen)
     raycaster.render(screen)
 
     # flip() the display to put your work on screen

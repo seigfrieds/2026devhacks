@@ -1,6 +1,7 @@
 NO_LAYER = -1
 LAYER_PLAYER = 1
 LAYER_POWERUP = 2
+LAYER_ENEMY = 3
 
 class CollidingObject():
     def __init__(self, c, l):

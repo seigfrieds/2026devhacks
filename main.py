@@ -20,7 +20,8 @@ player = Player()
 raycaster = Raycaster(player)
 
 # Setup enemies
-enemy = Enemy(pygame.Vector2(3,3))
+spawn_locations = [(1,4), (6,2), (5,4)]
+enemies = [Enemy(x) for x in spawn_locations]
 
 while running:
     # poll for events
@@ -36,13 +37,15 @@ while running:
 
     # update game here
     player.update()
-    enemy.update(newMap)
+    for enemy in enemies:
+        enemy.update(newMap)
     raycaster.cast_all_rays()
 
     # render here
     newMap.draw(screen)
     player.render(screen)
-    enemy.render(screen)
+    for enemy in enemies:
+        enemy.render(screen)
     raycaster.render(screen)
 
     # flip() the display to put your work on screen

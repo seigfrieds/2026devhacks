@@ -10,6 +10,9 @@ class PhysicsEngine:
     def register_colliding_object(self, colliding_obj):
         self.colliding_objects.append(colliding_obj)
 
+    def deregister_colliding_object(self, colliding_obj):
+        self.colliding_objects.remove(colliding_obj)
+
     def register_colliding_objects(self, colliding_objs):
         for colliding_obj in colliding_objs:
             self.register_colliding_object(colliding_obj)
@@ -18,6 +21,11 @@ class PhysicsEngine:
         self.register_colliding_object(moving_colliding_obj)
 
         self.moving_colliding_objects.append(moving_colliding_obj)
+
+    def deregister_moving_colliding_object(self, moving_colliding_obj):
+        self.deregister_colliding_object(moving_colliding_obj)
+
+        self.moving_colliding_objects.remove(moving_colliding_obj)
 
     def process_physics(self):
         for moving_colliding_object in self.moving_colliding_objects:

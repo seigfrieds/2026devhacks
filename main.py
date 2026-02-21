@@ -40,6 +40,9 @@ while running:
             pygame.quit()
             exit()
             running = False
+        if event.type == GAME_OVER:
+            print("Game Over")
+            physics_engine.deregister_moving_colliding_object(event.player)
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")

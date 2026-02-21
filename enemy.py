@@ -28,6 +28,12 @@ class Enemy(MovingCollidingObject):
         self.set_velocity(0,0)
         self.collision_time = pygame.time.get_ticks()
 
+        for collided_object in collided_objects:
+            if collided_object.get_layer() == LAYER_PLAYER:
+                event_params = {"player" : collided_object}
+                event = pygame.event.Event(GAME_OVER, event_params)
+                pygame.event.post(event)
+
     def update(self, world_map):
         if self.collided:
             self.check_pause_timer()

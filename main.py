@@ -33,6 +33,11 @@ physics_engine.register_moving_colliding_object(player)
 for enemy in enemies:
     physics_engine.register_moving_colliding_object(enemy)
 
+# text display
+font = pygame.font.SysFont(None, 48)
+text_surface = font.render("Good Game!", True, "BLUE")
+text_rect = text_surface.get_rect()
+text_rect.center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - TILE_SIZE / 2)
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -51,6 +56,8 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")
 
+    #pygame.display.flip()
+
     # update game here
     player.update()
     for enemy in enemies:
@@ -62,10 +69,13 @@ while running:
 
     # render here
     newMap.draw(screen)
-    player.render(screen)
-    for enemy in enemies:
-        enemy.render(screen)
-    raycaster.render(screen)
+    if (game_over):
+        screen.blit(text_surface, text_rect)   
+    else:
+        player.render(screen)
+        for enemy in enemies:
+            enemy.render(screen)
+        raycaster.render(screen)
 
     # flip() the display to put your work on screen
     pygame.display.flip()

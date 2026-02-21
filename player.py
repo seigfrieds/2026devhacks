@@ -14,6 +14,11 @@ class Player(MovingCollidingObject):
         self.rotation_speed = 2 * (math.pi / 180)
         super().__init__(250, 250, Collider(250, 250, self.radius, self.radius)) 
 
+    def run_collision_handler(self):
+        pass
+        #event = pygame.event.Event(0, message="make sure to change the event id")
+        #pygame.event.post(event)
+
     def update(self):
         keys = pygame.key.get_pressed()
 

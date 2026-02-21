@@ -5,6 +5,9 @@ class CollidingObject():
     def get_collider(self):
         return self.collider
 
+    def run_collision_handler(self):
+        pass #user can override..
+
 class MovingCollidingObject(CollidingObject):
     def __init__(self, x, y, c):
         self.x = x

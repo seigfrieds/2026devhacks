@@ -28,3 +28,4 @@ class PhysicsEngine:
                     collided = moving_colliding_object.get_collider().check_collision(other_colliding_object.get_collider())
                     if collided:
                         reset_callback()
+                        moving_colliding_object.run_collision_handler()

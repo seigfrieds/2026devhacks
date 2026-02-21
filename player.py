@@ -1,6 +1,7 @@
 import pygame
 import math
 from settings import *
+from utility import *
 from collider import Collider
 from physics_objects import MovingCollidingObject, LAYER_PLAYER, LAYER_POWERUP, LAYER_ENEMY
 
@@ -12,7 +13,8 @@ class Player(MovingCollidingObject):
         self.rotation_angle = 0 * (math.pi / 180)
         self.move_speed = 2.5
         self.rotation_speed = 2 * (math.pi / 180)
-        super().__init__(250, 250, Collider(250, 250, self.radius, self.radius), LAYER_PLAYER) 
+        self.spawn_pos = get_tile_coords(2,1)
+        super().__init__(self.spawn_pos.x, self.spawn_pos.y, Collider(self.spawn_pos.x, self.spawn_pos.y, self.radius, self.radius), LAYER_PLAYER) 
 
     def run_collision_handler(self, collided_objects):
         for collided_obj in collided_objects:
@@ -45,6 +47,14 @@ class Player(MovingCollidingObject):
         #set velocity
         move_step = self.walk_direction * self.move_speed
         self.set_velocity(math.cos(self.rotation_angle) * move_step, math.sin(self.rotation_angle) * move_step)
+        self.check_victory()
 
     def render(self, screen):
         pygame.draw.circle(screen, "red", (self.get_pos()[0], self.get_pos()[1]), self.radius)
+
+    def check_victory(self):
+        position = self.get_pos()
+        if position[1] > WINDOW_HEIGHT:
+            event_params = {"player" : self}
+            event = pygame.event.Event(VICTORY, event_params)
+            pygame.event.post(event)

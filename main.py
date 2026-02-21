@@ -25,12 +25,12 @@ raycaster = Raycaster(player)
 
 # Setup enemies
 spawn_locations = [(1,4), (6,2), (5,4)]
-enemies = [Enemy(physics_engine,x) for x in spawn_locations]
+enemies = [Enemy(x) for x in spawn_locations]
 
-# for enemy in enemies:
-#     physics_engine.register_collider(enemy.get_collider())
 physics_engine.register_colliding_objects(newMap.get_colliders())
 physics_engine.register_moving_colliding_object(player)
+for enemy in enemies:
+    physics_engine.register_moving_colliding_object(enemy)
 
 while running:
     # poll for events

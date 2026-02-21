@@ -32,4 +32,5 @@ class PhysicsEngine:
                         reset_callback()
                         collided_objects.append(other_colliding_object)
 
-                moving_colliding_object.run_collision_handler(collided_objects)
+                if len(collided_objects) > 0:
+                    moving_colliding_object.run_collision_handler(collided_objects)

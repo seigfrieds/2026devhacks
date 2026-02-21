@@ -48,10 +48,8 @@ while running:
             running = False
         if event.type == GAME_OVER:
             game_over = True
-            physics_engine.deregister_moving_colliding_object(event.player)
         if event.type == VICTORY:
             game_over = True
-            physics_engine.deregister_all_objects()
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("white")

@@ -5,9 +5,9 @@ TILE_SIZE = 64
 
 # Rows
 row = 8
-col = 8
+col = 16
 
-WINDOW_WIDTH = col * TILE_SIZE * 2
+WINDOW_WIDTH = col * TILE_SIZE
 WINDOW_HEIGHT = row * TILE_SIZE
 
 RESOLUTION = 4 #higher = more rays

@@ -15,7 +15,8 @@ RESOLUTION = 4 #higher = more rays
 NUM_RAYS = WINDOW_WIDTH // RESOLUTION
 
 GAME_OVER = pygame.event.custom_type()
-GAME_OVER_PARAMETERS = {}
+
+VICTORY = pygame.event.custom_type()
 
 
 

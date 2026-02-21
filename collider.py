@@ -3,7 +3,6 @@ import pygame
 #assuming collider will be rectangle.. but should probably be a base class
 class Collider:
     def __init__(self, left, top, width, height):
-        self.num_collisions = 0
         self.collider = pygame.Rect(left, top, width, height)
 
     def check_collision(self, other_collider):

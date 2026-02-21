@@ -19,11 +19,11 @@ physics_engine = PhysicsEngine()
 newMap = Map()
 
 # Setup player
-player = Player(physics_engine)
+player = Player()
 raycaster = Raycaster(player)
 
-physics_engine.register_colliders(newMap.get_colliders())
-physics_engine.register_collider(player.get_collider())
+physics_engine.register_colliding_objects(newMap.get_colliders())
+physics_engine.register_moving_colliding_object(player)
 
 while running:
     # poll for events
@@ -40,6 +40,9 @@ while running:
     # update game here
     player.update()
     raycaster.cast_all_rays()
+
+    # process physics
+    physics_engine.process_physics()
 
     # render here
     newMap.draw(screen)

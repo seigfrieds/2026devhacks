@@ -2,10 +2,12 @@ import settings
 import pygame
 from settings import *
 from collider import Collider
+from physics_objects import CollidingObject
 
 class Map:
     map = []
     def __init__(self):
+        #map grid
         self.map = [
             [1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 0, 0, 1, 1, 1],
@@ -17,18 +19,16 @@ class Map:
             [1, 1, 1, 1, 1, 1, 1, 1]
         ]
 
-        #register boxes and colliders (these are static..)
+        #register boxes and colliders from the map grid
         self.boxes = [[0 for j in range(col)] for i in range(row)]
         self.colliders = []
         for i in range(len(self.map)):
             for j in range(len(self.map[i])):
                 rect = pygame.Rect(j*settings.TILE_SIZE, i*settings.TILE_SIZE, settings.TILE_SIZE-1, settings.TILE_SIZE-1)
+                self.boxes[i][j] = rect
 
-                if self.map[i][j] == 1: # if one.. should be collider as well
-                    self.boxes[i][j] = rect
-                    self.colliders.append(Collider(rect.left, rect.top, rect.width, rect.height))
-                else:
-                    self.boxes[i][j] = rect
+                if self.map[i][j] == 1: # 1 means its a wall -> should be a collider
+                    self.colliders.append(CollidingObject(Collider(rect.left, rect.top, rect.width, rect.height)))
     
     def get_colliders(self):
         return self.colliders

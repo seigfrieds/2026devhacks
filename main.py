@@ -3,6 +3,7 @@ import pygame
 from settings import *
 from Map import Map
 from player import Player
+from enemy import Enemy
 from raycaster import Raycaster
 
 # pygame setup
@@ -18,6 +19,9 @@ newMap = Map()
 player = Player()
 raycaster = Raycaster(player)
 
+# Setup enemies
+enemy = Enemy(pygame.Vector2(1,2))
+
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -32,11 +36,13 @@ while running:
 
     # update game here
     player.update()
+    enemy.update(newMap)
     raycaster.cast_all_rays()
 
     # render here
     newMap.draw(screen)
     player.render(screen)
+    enemy.render(screen)
     raycaster.render(screen)
 
     # flip() the display to put your work on screen

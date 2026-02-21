@@ -2,23 +2,23 @@ import pygame
 import math
 from settings import *
 from collider import Collider
-from physics_engine import PhysicsEngine
+from physics_objects import MovingCollidingObject, LAYER_PLAYER, LAYER_POWERUP
 
-class Player:
-    def __init__(self, phys_engine: PhysicsEngine):
-        self.x = 250
-        self.y = 250
+class Player(MovingCollidingObject):
+    def __init__(self):
         self.radius = 3
         self.turn_direction = 0
         self.walk_direction = 0
         self.rotation_angle = 0 * (math.pi / 180)
         self.move_speed = 2.5
         self.rotation_speed = 2 * (math.pi / 180)
-        self.collider = Collider(self.x, self.y, self.radius, self.radius)
-        self.physics_engine = phys_engine
+        super().__init__(250, 250, Collider(250, 250, self.radius, self.radius), LAYER_PLAYER) 
 
-    def get_collider(self):
-        return self.collider
+    def run_collision_handler(self, collided_objects):
+        for collided_obj in collided_objects:
+            if collided_obj.get_layer() == LAYER_POWERUP:
+                event = pygame.event.Event(0, message="make sure to change the event id")
+                pygame.event.post(event)
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -38,17 +38,9 @@ class Player:
         #rotate
         self.rotation_angle += self.turn_direction * self.rotation_speed
 
-        #move
+        #set velocity
         move_step = self.walk_direction * self.move_speed
-        new_x = self.x + math.cos(self.rotation_angle) * move_step
-        new_y = self.y + math.sin(self.rotation_angle) * move_step
-        self.collider.change_collider_position(new_x, new_y)
-        if self.physics_engine.collider_is_colliding(self.collider):
-            print("test")
-            self.collider.change_collider_position(self.x, self.y)
-        else:
-            self.x = new_x
-            self.y = new_y
+        self.set_velocity(math.cos(self.rotation_angle) * move_step, math.sin(self.rotation_angle) * move_step)
 
     def render(self, screen):
-        pygame.draw.circle(screen, "red", (self.x, self.y), self.radius)
+        pygame.draw.circle(screen, "red", (self.get_pos()[0], self.get_pos()[1]), self.radius)

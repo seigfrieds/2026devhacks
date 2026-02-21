@@ -20,18 +20,18 @@ physics_engine = PhysicsEngine()
 newMap = Map()
 
 # Setup player
-player = Player(physics_engine)
+player = Player()
 raycaster = Raycaster(player)
-
 
 # Setup enemies
 spawn_locations = [(1,4), (6,2), (5,4)]
 enemies = [Enemy(physics_engine,x) for x in spawn_locations]
 
-physics_engine.register_colliders(newMap.get_colliders())
-physics_engine.register_collider(player.get_collider())
-for enemy in enemies:
-    physics_engine.register_collider(enemy.get_collider())
+# for enemy in enemies:
+#     physics_engine.register_collider(enemy.get_collider())
+physics_engine.register_colliding_objects(newMap.get_colliders())
+physics_engine.register_moving_colliding_object(player)
+
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -49,6 +49,9 @@ while running:
     for enemy in enemies:
         enemy.update(newMap)
     raycaster.cast_all_rays()
+
+    # process physics
+    physics_engine.process_physics()
 
     # render here
     newMap.draw(screen)

@@ -2,7 +2,7 @@ import settings
 import pygame
 from settings import *
 from collider import Collider
-from physics_objects import CollidingObject
+from physics_objects import CollidingObject, NO_LAYER
 
 class Map:
     map = []
@@ -28,7 +28,7 @@ class Map:
                 self.boxes[i][j] = rect
 
                 if self.map[i][j] == 1: # 1 means its a wall -> should be a collider
-                    self.colliders.append(CollidingObject(Collider(rect.left, rect.top, rect.width, rect.height)))
+                    self.colliders.append(CollidingObject(Collider(rect.left, rect.top, rect.width, rect.height), NO_LAYER))
     
     def get_colliders(self):
         return self.colliders

@@ -2,7 +2,7 @@ import pygame
 import math
 from settings import *
 from collider import Collider
-from physics_objects import MovingCollidingObject
+from physics_objects import MovingCollidingObject, LAYER_PLAYER, LAYER_POWERUP
 
 class Player(MovingCollidingObject):
     def __init__(self):
@@ -12,12 +12,13 @@ class Player(MovingCollidingObject):
         self.rotation_angle = 0 * (math.pi / 180)
         self.move_speed = 2.5
         self.rotation_speed = 2 * (math.pi / 180)
-        super().__init__(250, 250, Collider(250, 250, self.radius, self.radius)) 
+        super().__init__(250, 250, Collider(250, 250, self.radius, self.radius), LAYER_PLAYER) 
 
-    def run_collision_handler(self):
-        pass
-        #event = pygame.event.Event(0, message="make sure to change the event id")
-        #pygame.event.post(event)
+    def run_collision_handler(self, collided_objects):
+        for collided_obj in collided_objects:
+            if collided_obj.get_layer() == LAYER_POWERUP:
+                event = pygame.event.Event(0, message="make sure to change the event id")
+                pygame.event.post(event)
 
     def update(self):
         keys = pygame.key.get_pressed()

@@ -17,7 +17,7 @@ class Enemy:
 
     def update(self, world_map):
         self.turn_direction = 0
-        #self.check_rotation(world_map)
+        self.check_rotation(world_map)
 
         #move
         move_step = self.walk_direction * self.move_speed
@@ -26,28 +26,28 @@ class Enemy:
 
         self.current_tile = get_tile(self.x, self.y)
 
-    # def check_rotation(self, world_map):
-    #     match self.rotation_angle:
-    #         case Rotation.RIGHT:
-    #             if (world_map.map[int(self.current_tile.y)][int(self.current_tile.x + 1)] == 1 and
-    #                 get_tile(self.x + TILE_SIZE / 2, self.y).x != self.current_tile.x):
-    #                 self.rotation_angle = Rotation.DOWN
-    #                 self.check_rotation(world_map)
-    #         case Rotation.DOWN:
-    #             if (world_map.map[int(self.current_tile.y + 1)][int(self.current_tile.x)] == 1 and
-    #                 get_tile(self.y + TILE_SIZE / 2, self.y).y != self.current_tile.y):
-    #                 self.rotation_angle = Rotation.LEFT
-    #                 self.check_rotation(world_map)
-    #         case Rotation.LEFT:
-    #             if (world_map.map[int(self.current_tile.y)][int(self.current_tile.x - 1)] == 1 and
-    #                 get_tile(self.x - TILE_SIZE / 2, self.y).x != self.current_tile.x):
-    #                 self.rotation_angle = Rotation.UP
-    #                 self.check_rotation(world_map)
-    #         case Rotation.UP:
-    #             if (world_map.map[int(self.current_tile.y - 1)][int(self.current_tile.x)] == 1 and
-    #                 get_tile(self.y - TILE_SIZE / 2, self.y).y != self.current_tile.y):
-    #                 self.rotation_angle = Rotation.RIGHT
-    #                 self.check_rotation(world_map)
+    def check_rotation(self, world_map):
+        match self.rotation_angle:
+            case Rotation.RIGHT:
+                if (world_map.map[int(self.current_tile.y)][int(self.current_tile.x + 1)] == 1 and
+                    get_tile(self.x + TILE_SIZE / 2, self.y).x != self.current_tile.x):
+                    self.rotation_angle = Rotation.DOWN
+                    self.check_rotation(world_map)
+            case Rotation.DOWN:
+                if (world_map.map[int(self.current_tile.y + 1)][int(self.current_tile.x)] == 1 and
+                    get_tile(self.x, self.y + TILE_SIZE / 2).y != self.current_tile.y):
+                    self.rotation_angle = Rotation.LEFT
+                    self.check_rotation(world_map)
+            case Rotation.LEFT:
+                if (world_map.map[int(self.current_tile.y)][int(self.current_tile.x - 1)] == 1 and
+                    get_tile(self.x - TILE_SIZE / 2, self.y).x != self.current_tile.x):
+                    self.rotation_angle = Rotation.UP
+                    self.check_rotation(world_map)
+            case Rotation.UP:
+                if (world_map.map[int(self.current_tile.y - 1)][int(self.current_tile.x)] == 1 and
+                    get_tile(self.y, self.y - TILE_SIZE / 2).y != self.current_tile.y):
+                    self.rotation_angle = Rotation.RIGHT
+                    self.check_rotation(world_map)
 
     def render(self, screen):
         pygame.draw.circle(screen, "blue", (self.x, self.y), self.radius)

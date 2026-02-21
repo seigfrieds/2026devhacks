@@ -20,7 +20,7 @@ player = Player()
 raycaster = Raycaster(player)
 
 # Setup enemies
-enemy = Enemy(pygame.Vector2(1,2))
+enemy = Enemy(pygame.Vector2(3,3))
 
 while running:
     # poll for events

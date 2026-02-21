@@ -17,7 +17,7 @@ class Enemy(MovingCollidingObject):
         self.turn_direction = 0
         self.walk_direction = 1
         self.rotation_angle = Rotation.RIGHT
-        self.move_speed = 1
+        self.move_speed = 1.5
         super().__init__(x, y, Collider(x, y, self.radius, self.radius), LAYER_ENEMY)
         self.collided = False
         self.collision_time = 0
@@ -39,6 +39,9 @@ class Enemy(MovingCollidingObject):
             self.check_pause_timer()
         else:
             self.turn_direction = 0
+            current_pos = self.get_pos()
+            if current_pos[1] > (WINDOW_HEIGHT - TILE_SIZE):
+                self.flip_rotation()
             self.check_rotation(world_map)
 
             #move

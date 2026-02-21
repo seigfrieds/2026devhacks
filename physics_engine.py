@@ -27,6 +27,10 @@ class PhysicsEngine:
 
         self.moving_colliding_objects.remove(moving_colliding_obj)
 
+    def deregister_all_objects(self):
+        self.colliding_objects = []
+        self.moving_colliding_objects = []
+
     def process_physics(self):
         for moving_colliding_object in self.moving_colliding_objects:
             reset_callback = moving_colliding_object.move()

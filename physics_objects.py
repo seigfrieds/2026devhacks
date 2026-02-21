@@ -6,5 +6,5 @@ class CollidingObject():
         return self.collider
 
 class MovingCollidingObject(CollidingObject):
-    def move() -> tuple[int, int]:
+    def move():
         raise NotImplementedError("Implement the method")
